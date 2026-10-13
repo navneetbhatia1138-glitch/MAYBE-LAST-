@@ -1,7 +1,6 @@
 import streamlit as st
 import requests
 import os
-import base64
 import time
 from dotenv import load_dotenv
 
@@ -28,19 +27,34 @@ if st.button("Generate Video"):
         st.error("Please write a script.")
         st.stop()
 
-    file_bytes = uploaded_file.read()
-    b64_img = base64.b64encode(file_bytes).decode("utf-8")
-    data_uri = f"data:image/jpeg;base64,{b64_img}"
-
     auth_header = f"Basic {API_KEY}"
 
-    with st.spinner("Submitting image and script to D-ID..."):
+    # Step 1: Upload Image to D-ID
+    with st.spinner("Uploading image to D-ID servers..."):
+        try:
+            img_res = requests.post(
+                "https://api.d-id.com/images",
+                headers={"Authorization": auth_header},
+                files={"image": (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)}
+            )
+            img_data = img_res.json()
+            if img_res.status_code != 201:
+                st.error(f"Image Upload Error: {img_data.get('description', img_data)}")
+                st.stop()
+            
+            uploaded_image_url = img_data.get("url")
+        except Exception as e:
+            st.error(f"Image upload failed: {str(e)}")
+            st.stop()
+
+    # Step 2: Generate Talk Video
+    with st.spinner("Submitting script to D-ID..."):
         try:
             res = requests.post(
                 "https://api.d-id.com/talks",
                 headers={"Authorization": auth_header, "Content-Type": "application/json"},
                 json={
-                    "source_url": data_uri,
+                    "source_url": uploaded_image_url,
                     "script": {
                         "type": "text",
                         "input": script,
@@ -54,9 +68,10 @@ if st.button("Generate Video"):
                 st.stop()
             talk_id = data["id"]
         except Exception as e:
-            st.error(f"Request failed: {str(e)}")
+            st.error(f"Video request failed: {str(e)}")
             st.stop()
 
+    # Step 3: Poll for Completion
     with st.spinner("Rendering video (10-20 seconds)..."):
         while True:
             poll_res = requests.get(f"https://api.d-id.com/talks/{talk_id}", headers={"Authorization": auth_header})
