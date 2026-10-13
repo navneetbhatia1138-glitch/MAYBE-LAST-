@@ -3,11 +3,10 @@
 A production-grade AI talking-head video generator powered by the D-ID API and Microsoft Azure Speech Synthesis available via both a Streamlit Web Application (Python) and a Next.js 14 Web Application (App Router, Node.js).
 
 ## 💡 Features
-- **Real HTTPS Integration**: Direct integration with D-ID API (Generative AI) assuming strict polling.
-- **Presenter Avatars**: Supply any direct hosted face JPEG/PNG image URL with dynamic live preview.
-- **Microsoft Azure Neural Voices**: Choose from multiple natural speech voices (Jenny, Guy, Aria, etc.).
+- **Real HTTPS Integration**: Direct integration with D-ID API (Generative AI) using polling.
+- **Local Face Uploads**: Upload your own JPG/PNG face images directly from your computer (encoded automatically to Base64).
+- **Microsoft Azure Neural Voices**: Natural speech voices (Jenny, Guy, Aria, etc.).
 - **Live Studio Monitor**: Real-time polling with progress UI, embedded video player, and one-click MP4 download.
-- **Generation History**: Display and replay past generations from your local storage.
 
 ## 🚀 Quickstart: Streamlit Web App (Python)
 
@@ -15,7 +14,7 @@ A production-grade AI talking-head video generator powered by the D-ID API and M
 `pip install -r requirements.txt`
 
 **2. Configure API Key**
-Create a `.env` file in the root directory:
+Add your key inside `.env`:
 `D_ID_API_KEY=your_api_key_here`
 
 **3. Run Locally**
@@ -33,7 +32,7 @@ Open http://localhost:8501 in your browser.
 `git push -u origin main`
 
 **2. Deploy on Streamlit Community Cloud**
-- Go to [share.streamlit.io](https://share.streamlit.io/) and log in.
+- Go to https://share.streamlit.io/ and log in.
 - Click **New app** and select your GitHub repository.
 - Set **Main file path** to `app.py`.
 - Click **Advanced settings** -> **Secrets**, add your API key:
@@ -54,4 +53,4 @@ Create a `.env.local` file:
 Open http://localhost:3000 in your browser.
 
 ## 🔒 Security
-`D_ID_API_KEY` is strictly resolved dynamically in backend server components/route handlers. Never expose your secret key directly to client bundles.
+`D_ID_API_KEY` is strictly resolved on backend servers and route handlers. Never expose your key directly to client bundles.
