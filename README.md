@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎬 AI Talking-Head Studio (D-ID)
 
-## Getting Started
+A production-grade AI talking-head video generator powered by the D-ID API and Microsoft Azure Speech Synthesis available via both a Streamlit Web Application (Python) and a Next.js 14 Web Application (App Router, Node.js).
 
-First, run the development server:
+## 💡 Features
+- **Real HTTPS Integration**: Direct integration with D-ID API (Generative AI) assuming strict polling.
+- **Presenter Avatars**: Supply any direct hosted face JPEG/PNG image URL with dynamic live preview.
+- **Microsoft Azure Neural Voices**: Choose from multiple natural speech voices (Jenny, Guy, Aria, etc.).
+- **Live Studio Monitor**: Real-time polling with progress UI, embedded video player, and one-click MP4 download.
+- **Generation History**: Display and replay past generations from your local storage.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Quickstart: Streamlit Web App (Python)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**1. Install Dependencies**
+`pip install -r requirements.txt`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**2. Configure API Key**
+Create a `.env` file in the root directory:
+`D_ID_API_KEY=your_api_key_here`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**3. Run Locally**
+`streamlit run app.py`
+Open http://localhost:8501 in your browser.
 
-## Learn More
+## ☁️ Deploy to Streamlit Community Cloud (GitHub)
 
-To learn more about Next.js, take a look at the following resources:
+**1. Push to GitHub**
+`git init`
+`git add .`
+`git commit -m "Initial commit - AI Talking-Head Studio"`
+`git branch -M main`
+`git remote add origin https://github.com/navneetbhatia1138-glitch/MAYBE-LAST-.git`
+`git push -u origin main`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**2. Deploy on Streamlit Community Cloud**
+- Go to [share.streamlit.io](https://share.streamlit.io/) and log in.
+- Click **New app** and select your GitHub repository.
+- Set **Main file path** to `app.py`.
+- Click **Advanced settings** -> **Secrets**, add your API key:
+  `D_ID_API_KEY = "your_api_key_here"`
+- Click **Deploy!**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ⚡ Quickstart: Next.js 14 App Router (Node.js)
 
-## Deploy on Vercel
+**1. Install Dependencies**
+`npm install`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**2. Configure API Key**
+Create a `.env.local` file:
+`D_ID_API_KEY=your_api_key_here`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**3. Run Next.js Dev Server**
+`npm run dev`
+Open http://localhost:3000 in your browser.
+
+## 🔒 Security
+`D_ID_API_KEY` is strictly resolved dynamically in backend server components/route handlers. Never expose your secret key directly to client bundles.
